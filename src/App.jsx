@@ -4,26 +4,25 @@ import Input from "./components/Input";
 import "./App.css";
 
 function App() {
-  const [todoList, setTodoList] = useState([
-    {
-      id: 0,
-      title: "리액트 공부하기",
-      content: "리액트 입문 강의 듣기",
-      isDone: true,
-    },
-    {
-      id: 1,
-      title: "리액트 공부하기",
-      content: "리액트 숙련 강의 듣기",
-      isDone: false,
-    },
-    {
-      id: 2,
-      title: "리액트 공부하기",
-      content: "리액트 숙련 강의 듣기",
-      isDone: false,
-    },
-  ]);
+  const localData = localStorage.getItem("todoItem");
+  const [todoList, setTodoList] = useState(() => {
+    return localData
+      ? JSON.parse(localData)
+      : [
+          {
+            id: 0,
+            title: "리액트 공부하기",
+            content: "리액트 입문 강의 듣기",
+            isDone: true,
+          },
+          {
+            id: 1,
+            title: "리액트 공부하기",
+            content: "리액트 숙련 강의 듣기",
+            isDone: false,
+          },
+        ];
+  });
 
   const [todo, setTodo] = useState({
     title: "",
@@ -39,18 +38,24 @@ function App() {
   const clickAddButtonHandler = (event) => {
     event.preventDefault();
     const newTodoList = {
-      id: todoList[todoList.length - 1]?.id + 1 || 1,
+      // id: todoList[todoList.length - 1]?.id + 1 || 1,
+      id: Date.now(),
       ...todo,
       isDone: false,
     };
 
     setTodoList([...todoList, newTodoList]);
     setTodo({ title: "", content: "" });
+    localStorage.setItem(
+      "todoItem",
+      JSON.stringify([...todoList, newTodoList])
+    );
   };
 
   const clickDeleteButtonHandler = (id) => {
     const newTodoList = todoList.filter((item) => item.id !== id);
     setTodoList(newTodoList);
+    localStorage.setItem("todoItem", JSON.stringify(newTodoList));
   };
 
   const clickUpdateButtonHandler = (id) => {
@@ -59,6 +64,7 @@ function App() {
     });
 
     setTodoList(updateTodoList);
+    localStorage.setItem("todoItem", JSON.stringify(updateTodoList));
   };
 
   const workingTask = todoList.filter((todoList) => !todoList.isDone);

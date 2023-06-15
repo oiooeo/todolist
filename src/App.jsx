@@ -1,7 +1,7 @@
-import "./App.css";
 import { useState } from "react";
+import { DeleteButton, UpdateButton } from "./components/Buttons";
 import Input from "./components/Input";
-import DeleteButton from "./components/Buttons";
+import "./App.css";
 
 function App() {
   const [todoList, setTodoList] = useState([
@@ -52,7 +52,15 @@ function App() {
     const newTodoList = todoList.filter((item) => item.id !== id);
     setTodoList(newTodoList);
   };
-  
+
+  const clickUpdateButtonHandler = (id) => {
+    const updateTodoList = todoList.map((item) => {
+      return item.id === id ? { ...item, isDone: !item.isDone } : item;
+    });
+
+    setTodoList(updateTodoList);
+  };
+
   const workingTask = todoList.filter((todoList) => !todoList.isDone);
   const doneTask = todoList.filter((todoList) => todoList.isDone);
 
@@ -81,7 +89,12 @@ function App() {
                 >
                   삭제
                 </DeleteButton>
-                <button className="updateBtn">완료</button>
+                <UpdateButton
+                  item={item}
+                  clickUpdateButtonHandler={clickUpdateButtonHandler}
+                >
+                  완료
+                </UpdateButton>
               </div>
             );
           })}
@@ -102,7 +115,12 @@ function App() {
                 >
                   삭제
                 </DeleteButton>
-                <button className="updateBtn">취소</button>
+                <UpdateButton
+                  item={item}
+                  clickUpdateButtonHandler={clickUpdateButtonHandler}
+                >
+                  취소
+                </UpdateButton>
               </div>
             );
           })}

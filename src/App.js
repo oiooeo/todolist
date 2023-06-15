@@ -52,7 +52,7 @@ function App() {
     const newTodoList = todoList.filter((item) => item.id !== id);
     setTodoList(newTodoList);
   };
-
+  
   const workingTask = todoList.filter((todoList) => !todoList.isDone);
   const doneTask = todoList.filter((todoList) => todoList.isDone);
 

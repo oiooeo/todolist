@@ -21,5 +21,7 @@ $ npm start
 ## `Components`
 
 Input : 할 일 추가를 위한 Input components
+
 Buttons : 할 일 삭제와 상태 변경 버튼
+
 TodoList : 할 일과 한 일을 보여주는 리스트

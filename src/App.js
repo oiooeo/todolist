@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import Input from "./components/Input";
+import DeleteButton from "./components/Buttons";
 
 function App() {
   const [todoList, setTodoList] = useState([
@@ -47,6 +48,11 @@ function App() {
     setTodo({ title: "", content: "" });
   };
 
+  const clickDeleteButtonHandler = (id) => {
+    const newTodoList = todoList.filter((item) => item.id !== id);
+    setTodoList(newTodoList);
+  };
+  
   const workingTask = todoList.filter((todoList) => !todoList.isDone);
   const doneTask = todoList.filter((todoList) => todoList.isDone);
 
@@ -69,7 +75,12 @@ function App() {
                 <p className="title">{item.title}</p>
                 <p className="content">{item.content}</p>
                 <br />
-                <button className="deleteBtn">삭제</button>
+                <DeleteButton
+                  item={item}
+                  clickDeleteButtonHandler={clickDeleteButtonHandler}
+                >
+                  삭제
+                </DeleteButton>
                 <button className="updateBtn">완료</button>
               </div>
             );
@@ -85,7 +96,12 @@ function App() {
                 <p className="title">{item.title}</p>
                 <p className="content">{item.content}</p>
                 <br />
-                <button className="deleteBtn">삭제</button>
+                <DeleteButton
+                  item={item}
+                  clickDeleteButtonHandler={clickDeleteButtonHandler}
+                >
+                  삭제
+                </DeleteButton>
                 <button className="updateBtn">취소</button>
               </div>
             );

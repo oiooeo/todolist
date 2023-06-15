@@ -14,7 +14,7 @@ $ yarn install
 
 ## 4. `Run`
 
-$ npm start
+$ yarn start
 
 ---
 
